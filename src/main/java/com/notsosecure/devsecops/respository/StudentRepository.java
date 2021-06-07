@@ -66,39 +66,17 @@ public class StudentRepository {
 		}
 	}
 
-	public boolean findByUserName(String userName) {
-		if (dbConnection != null) {
-			try {
-				PreparedStatement prepStatement = dbConnection
-						.prepareStatement("select count(*) from student where userName = ?");
-				prepStatement.setString(1, userName);
-
-				ResultSet result = prepStatement.executeQuery();
-				if (result != null) {
-					while (result.next()) {
-						if (result.getInt(1) == 1) {
-							return true;
-						}
-					}
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		return false;
-	}
-
-	// public boolean findByLogin(String userName, String password) {
+	// public boolean findByUserName(String userName) {
 	// 	if (dbConnection != null) {
 	// 		try {
 	// 			PreparedStatement prepStatement = dbConnection
-	// 					.prepareStatement("select password from student where userName = ?");
+	// 					.prepareStatement("select count(*) from student where userName = ?");
 	// 			prepStatement.setString(1, userName);
 
 	// 			ResultSet result = prepStatement.executeQuery();
 	// 			if (result != null) {
 	// 				while (result.next()) {
-	// 					if (result.getString(1).equals(password)) {
+	// 					if (result.getInt(1) == 1) {
 	// 						return true;
 	// 					}
 	// 				}
@@ -110,28 +88,50 @@ public class StudentRepository {
 	// 	return false;
 	// }
 
+	public boolean findByLogin(String userName, String password) {
+		if (dbConnection != null) {
+			try {
+				PreparedStatement prepStatement = dbConnection
+						.prepareStatement("select password from student where userName = ?");
+				prepStatement.setString(1, userName);
+
+				ResultSet result = prepStatement.executeQuery();
+				if (result != null) {
+					while (result.next()) {
+						if (result.getString(1).equals(password)) {
+							return true;
+						}
+					}
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return false;
+	}
+
 // VULNERABLE CODE
-	 public boolean findByLoginSQL(String userName, String password) {
+	//  public boolean findByLoginSQL(String userName, String password) {
 	
-	 	if (dbConnection != null) {
-	 		try {
+	//  	if (dbConnection != null) {
+	//  		try {
 	
-	 			Statement stmt = dbConnection.createStatement();
-	 			 ResultSet rs;
-	 			 rs = stmt.executeQuery("select password from student where userName="+userName);
-	 			 if (rs != null) {
-	 					while (rs.next()) {
-	 						if (rs.getString(1).equals(password)) {
-	 							return true;
-	 						}
-	 					}
-	 				}
-	 		} catch (Exception e) {
-	 			e.printStackTrace();
-	 		}
-	 	}
-	 	return false;
-	 }
+	//  			Statement stmt = dbConnection.createStatement();
+	//  			 ResultSet rs;
+	//  			 rs = stmt.executeQuery("select password from student where userName="+userName);
+	//  			 if (rs != null) {
+	//  					while (rs.next()) {
+	//  						if (rs.getString(1).equals(password)) {
+	//  							return true;
+	//  						}
+	//  					}
+	//  				}
+	//  		} catch (Exception e) {
+	//  			e.printStackTrace();
+	//  		}
+	//  	}
+	//  	return false;
+	//  }
 
 	public List<Student> list() {
 		List<Student> students = new ArrayList<Student>();
