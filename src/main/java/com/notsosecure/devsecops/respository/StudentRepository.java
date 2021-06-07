@@ -66,27 +66,27 @@ public class StudentRepository {
 		}
 	}
 
-	// public boolean findByUserName(String userName) {
-	// 	if (dbConnection != null) {
-	// 		try {
-	// 			PreparedStatement prepStatement = dbConnection
-	// 					.prepareStatement("select count(*) from student where userName = ?");
-	// 			prepStatement.setString(1, userName);
+	public boolean findByUserName(String userName) {
+		if (dbConnection != null) {
+			try {
+				PreparedStatement prepStatement = dbConnection
+						.prepareStatement("select count(*) from student where userName = ?");
+				prepStatement.setString(1, userName);
 
-	// 			ResultSet result = prepStatement.executeQuery();
-	// 			if (result != null) {
-	// 				while (result.next()) {
-	// 					if (result.getInt(1) == 1) {
-	// 						return true;
-	// 					}
-	// 				}
-	// 			}
-	// 		} catch (Exception e) {
-	// 			e.printStackTrace();
-	// 		}
-	// 	}
-	// 	return false;
-	// }
+				ResultSet result = prepStatement.executeQuery();
+				if (result != null) {
+					while (result.next()) {
+						if (result.getInt(1) == 1) {
+							return true;
+						}
+					}
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return false;
+	}
 
 	public boolean findByLogin(String userName, String password) {
 		if (dbConnection != null) {
